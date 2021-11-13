@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableService } from '../../services/table.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UserInterface } from '../../interfaces/user.interface';
+import { TeamInterface } from '../../interfaces/team.interface';
+import { cloneDeep, each } from 'lodash-es';
+import { AllUsersAction } from '../../store/actions/users.actions';
+import { Store } from '@ngrx/store';
+import { IAppState } from '../../store/state/app.state';
 
 export class Group {
   level = 0;
@@ -13,52 +20,71 @@ export class Group {
   }
 }
 
+@UntilDestroy()
 @Component({
   selector: 'app-table-total',
   templateUrl: './table-total.component.html',
   styleUrls: ['./table-total.component.scss']
 })
 export class TableTotalComponent implements OnInit {
+  get users(): UserInterface[] {
+    return this._users;
+  }
+
+  @Input() set users(value: UserInterface[]) {
+    this._users = value;
+  }
+
+  private _users: UserInterface[] = [];
+
+  get teams(): TeamInterface[] {
+    return this._teams;
+  }
+
+  @Input() set teams(value: TeamInterface[]) {
+    this._teams = value;
+  }
+
+  private _teams: TeamInterface[] = [];
 
   title = 'Grid Grouping';
 
   public dataSource = new MatTableDataSource<any | Group>([]);
 
   _alldata!: any[];
-  columns: any[];
+  columns: any[] = [
+    {
+      field: 'team'
+    },
+    {
+      field: 'name'
+    },
+    {
+      field: 'count'
+    },
+    {
+      field: 'id'
+    },
+
+  ];
   displayedColumns: string[];
   groupByColumns: string[] = [];
 
   constructor(
     protected dataSourceService: TableService,
+    public store$: Store<IAppState>,
   ) {
 
-    this.columns = [{
-      field: 'group'
-    },
-      {
-        field: 'user'
-      },
-      {
-        field: 'counter'
-      },
-      {
-        field: 'id'
-      },
-
-    ];
     this.displayedColumns = this.columns.map(column => column.field);
-    this.groupByColumns = ['group'];
+    this.groupByColumns = ['team'];
   }
 
   ngOnInit() {
     this.dataSourceService.getAllData()
+      .pipe(untilDestroyed(this))
       .subscribe(
-        (data: any) => {
-          data.data.forEach((item: { id: any; }, index: number) => {
-            item.id = index + 1;
-          });
-          this._alldata = data.data;
+        (user: UserInterface[]) => {
+          this._alldata = user;
           this.dataSource.data = this.addGroups(this._alldata, this.groupByColumns);
           this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
           this.dataSource.filter = performance.now().toString();
@@ -184,4 +210,19 @@ export class TableTotalComponent implements OnInit {
     return item.level;
   }
 
+  changeCount(row: any, operation: string) {
+    if (operation === 'add') {
+      row.count += 1;
+    } else {
+      if (row.count > 0) {
+        row.count -= 1;
+      }
+    }
+    each(this.users, (user, index) => {
+      if (user.id === row.id) {
+        this.users[index] = row;
+      }
+    });
+    this.store$.dispatch(new AllUsersAction(cloneDeep(this.users)));
+  }
 }

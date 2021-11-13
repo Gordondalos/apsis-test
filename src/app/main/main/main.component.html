@@ -1,8 +1,9 @@
-
 <div class="d-flex mb16">
   <div class="f-gr-1"></div>
   <button color="primary" mat-raised-button (click)="createUser()">Create user</button>
   <button class="mx16" color="primary" mat-raised-button (click)="editTeam()">Edit Team</button>
 </div>
 
-<app-table-total></app-table-total>
+<app-table-total
+  [users]="users"
+  [teams]="teams"></app-table-total>

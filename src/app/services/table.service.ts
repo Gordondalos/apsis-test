@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { from, Observable } from 'rxjs';
 import { TeamInterface } from '../interfaces/team.interface';
+import { UserInterface } from '../interfaces/user.interface';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +15,49 @@ export class TableService {
   }
 
   /*
-  * Данная функция должна возвращать данные с бекенда
+  * This function should return data from the backend
+  * return this.http.get(myUrl)
   * */
-  getTeams(): Promise<TeamInterface[]> {
+  getData(type: string): Promise<UserInterface[] | TeamInterface[]> {
+
     return new Promise((resolve) => {
-      const teams = localStorage.getItem('teams');
-      if (teams) {
-        resolve(JSON.parse(teams));
+      const data = localStorage.getItem(type);
+      if (data) {
+        resolve(JSON.parse(data));
       }
       resolve([]);
     });
   }
 
-  updateTeams(teams: TeamInterface[]) {
+  /*
+  * work with the backend is therefore done asynchronously
+  * return this.http.post(myUrl, data);
+  * */
+  update(users: UserInterface[] | TeamInterface[], type: string): Promise<any> {
     return new Promise((resolve) => {
-      localStorage.setItem('teams', JSON.stringify(teams));
+      localStorage.setItem(type, JSON.stringify(users));
       resolve(true);
     });
   }
 
-  getAllData(): Observable<any[]> {
+
+  /*
+  This function should return data from the backend
+  * return this.http.get(myUrl);
+  * */
+  getAllData(): Observable<UserInterface[]> {
+    const type = 'users';
+    const prom: Promise<UserInterface[]> = new Promise((resolve) => {
+      const data = localStorage.getItem(type);
+      if (data) {
+        resolve(JSON.parse(data));
+      }
+      resolve([]);
+    });
+    return from(prom);
+  }
+
+  getAllData2(){
     return this.http.get<any[]>('./assets/data/liderboard.json');
   }
 }

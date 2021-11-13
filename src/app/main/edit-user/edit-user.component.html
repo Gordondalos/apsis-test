@@ -6,7 +6,7 @@
     <ng-container *ngFor="let user of users">
       <mat-list-item class="mat-elevation-z2 mb16" role="listitem">
         <div class="d-flex w100">
-          {{user.name}}
+          {{user.name}} | {{user.team | teamNameById: teams}}
           <div class="f-gr-1"></div>
           <mat-icon (click)="edit(user)" class="f18 mr16 pointer" color="accent">edit</mat-icon>
           <mat-icon (click)="delete(user)" class="f18 pointer" color="warn">delete</mat-icon>

@@ -1,23 +1,26 @@
 import { dashboardState, IDashboardState } from '../state/dashboard.state';
-import { ECurrentDashboardActions } from '../actions/current-dashboard.actions';
 import { ETeamsActions } from '../actions/teams.actions';
+import { EUsersActions } from '../actions/users.actions';
 
 
 export const currentDashBoardReducer = (state = dashboardState, action: any): IDashboardState => {
 
   switch (action.type) {
 
-    case ETeamsActions.updateTeamsAction:{
+    case ETeamsActions.updateTeamsAction: {
       return {
         ...state,
         teams: [...action.payload]
       };
     }
+    case EUsersActions.updateUsersAction: {
+      return {
+        ...state,
+        users: [...action.payload]
+      };
+    }
 
-    // case ECurrentDashboardActions.updateCurrentDashboard:
-    //   return {
-    //     ...action.payload
-    //   };
+
     // case ECurrentDashboardActions.updateCurrentDashboardTitle:
     //   return {
     //     ...state,

@@ -8,10 +8,12 @@ import { IAppState } from '../../store/state/app.state';
 import { teamsSelector } from '../../store/selectors/teams.selector';
 
 import { AllTeamsAction } from '../../store/actions/teams.actions';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 class FormlyFieldConfig {
 }
 
+@UntilDestroy()
 @Component({
   selector: 'app-edit-group',
   templateUrl: './edit-group.component.html',
@@ -43,6 +45,7 @@ export class EditGroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.store$.pipe(select(teamsSelector))
+      .pipe(untilDestroyed(this))
       .subscribe((teams) => {
         if (teams && teams.length) {
           this.teams = cloneDeep(teams);
@@ -76,7 +79,6 @@ export class EditGroupComponent implements OnInit {
 
   edit(team: TeamInterface) {
     this.model = team;
-    this.updateData();
   }
 
   updateData() {

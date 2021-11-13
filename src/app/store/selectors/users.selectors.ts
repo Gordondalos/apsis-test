@@ -1,12 +1,12 @@
 import { IAppState } from '../state/app.state';
 import { createSelector } from '@ngrx/store';
 
-export const teamsSelector = (state: IAppState) => {
-  return state.main.teams;
+export const usersSelector = (state: IAppState) => {
+  return state.main.users;
 };
 
-export const teams = createSelector(
-  teamsSelector,
+export const users = createSelector(
+  usersSelector,
   (state) => {
     return state;
   }

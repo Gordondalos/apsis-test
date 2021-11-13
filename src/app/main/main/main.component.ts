@@ -10,7 +10,12 @@ import { cloneDeep } from 'lodash-es';
 import { select, Store } from '@ngrx/store';
 import { IAppState } from '../../store/state/app.state';
 import { teamsSelector } from '../../store/selectors/teams.selector';
+import { UserInterface } from '../../interfaces/user.interface';
+import { usersSelector } from '../../store/selectors/users.selectors';
+import { AllUsersAction } from '../../store/actions/users.actions';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -19,6 +24,7 @@ import { teamsSelector } from '../../store/selectors/teams.selector';
 export class MainComponent implements OnInit {
 
   teams: TeamInterface[] = [];
+  users: UserInterface[] = [];
 
   constructor(
     private mainService: MainService,
@@ -27,9 +33,18 @@ export class MainComponent implements OnInit {
     public store$: Store<IAppState>,
   ) {
     this.store$.pipe(select(teamsSelector))
-      .subscribe((teams) => {
+      .pipe(untilDestroyed(this))
+      .subscribe((teams: TeamInterface[]) => {
         if (teams && teams.length) {
-          this.tableService.updateTeams(teams).then();
+          this.tableService.update(teams, 'teams').then();
+        }
+      });
+
+    this.store$.pipe(select(usersSelector))
+      .pipe(untilDestroyed(this))
+      .subscribe((users: UserInterface[]) => {
+        if (users && users.length) {
+          this.tableService.update(users, 'users').then();
         }
       });
   }
@@ -39,9 +54,14 @@ export class MainComponent implements OnInit {
   }
 
   async loadData() {
-    this.teams = await this.tableService.getTeams();
+    this.teams = await this.tableService.getData('teams');
     if (this.teams?.length) {
       this.store$.dispatch(new AllTeamsAction(cloneDeep(this.teams)));
+    }
+
+    this.users = await this.tableService.getData('users');
+    if (this.users?.length) {
+      this.store$.dispatch(new AllUsersAction(cloneDeep(this.users)));
     }
   }
 

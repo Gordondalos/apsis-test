@@ -12,6 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FormlyModule } from '@ngx-formly/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
+import { PipesModule } from '../pipes/pipes.module';
 
 const routes: Routes = [
   {
@@ -28,16 +29,17 @@ const routes: Routes = [
     EditGroupComponent,
     TableTotalComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    MatButtonModule,
-    MatTableModule,
-    MatIconModule,
-    MatMenuModule,
-    FormlyModule.forChild(),
-    ReactiveFormsModule,
-    MatListModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        MatButtonModule,
+        MatTableModule,
+        MatIconModule,
+        MatMenuModule,
+        FormlyModule.forChild(),
+        ReactiveFormsModule,
+        MatListModule,
+        PipesModule
+    ]
 })
 export class MainModule { }

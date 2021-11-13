@@ -5,14 +5,22 @@
       {{ column.field }}
     </mat-header-cell>
     <mat-cell class="justify-content-center" *matCellDef="let row">
-      <ng-container *ngIf="column.field === 'counter'">
-        <button mat-mini-fab color="primary" class="mx16">
+      <ng-container *ngIf="column.field === 'count'">
+        <button (click)="changeCount(row, 'add')"  mat-mini-fab color="primary" class="mx16">
          +
         </button>
       </ng-container>
-      {{ row[column.field] }}
-      <ng-container *ngIf="column.field === 'counter'">
-        <button mat-mini-fab color="primary" class="mx16">
+
+      <ng-container *ngIf="column.field === 'team'">
+        {{ row[column.field] | teamNameById: teams }}
+      </ng-container>
+
+      <ng-container *ngIf="column.field !== 'team'">
+        {{ row[column.field] }}
+      </ng-container>
+
+      <ng-container *ngIf="column.field === 'count'">
+        <button (click)="changeCount(row, 'sub')" mat-mini-fab color="primary" class="mx16">
           -
         </button>
       </ng-container>
@@ -27,7 +35,9 @@
     <mat-cell class="pointer" colspan="999" *matCellDef="let group">
       <mat-icon *ngIf="group.expanded">expand_more</mat-icon>
       <mat-icon *ngIf="!group.expanded">chevron_right</mat-icon>
-      <strong>{{groupByColumns[group.level-1]}} = {{group[groupByColumns[group.level-1]]}} ({{group.totalCounts}})</strong>
+      <strong>{{groupByColumns[group.level-1]}} =
+          {{group[groupByColumns[group.level-1]] | teamNameById: teams}}
+        ({{group.totalCounts}})</strong>
     </mat-cell>
   </ng-container>
 
