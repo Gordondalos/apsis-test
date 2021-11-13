@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { from, Observable } from 'rxjs';
 import { TeamInterface } from '../interfaces/team.interface';
 import { UserInterface } from '../interfaces/user.interface';
+import { after } from 'utils-decorators';
 
 
 @Injectable({
@@ -18,6 +19,11 @@ export class TableService {
   * This function should return data from the backend
   * return this.http.get(myUrl)
   * */
+  @after({
+    func: () => {
+      console.log('logger getData');
+    },
+  })
   getData(type: string): Promise<UserInterface[] | TeamInterface[]> {
 
     return new Promise((resolve) => {
@@ -29,10 +35,17 @@ export class TableService {
     });
   }
 
+
   /*
   * work with the backend is therefore done asynchronously
   * return this.http.post(myUrl, data);
+  *showing work with localstorage
   * */
+  @after({
+    func: () => {
+      console.log('logger update data');
+    },
+  })
   update(users: UserInterface[] | TeamInterface[], type: string): Promise<any> {
     return new Promise((resolve) => {
       localStorage.setItem(type, JSON.stringify(users));
@@ -44,6 +57,7 @@ export class TableService {
   /*
   This function should return data from the backend
   * return this.http.get(myUrl);
+   *showing work with localstorage
   * */
   getAllData(): Observable<UserInterface[]> {
     const type = 'users';
@@ -57,7 +71,7 @@ export class TableService {
     return from(prom);
   }
 
-  getAllData2(){
-    return this.http.get<any[]>('./assets/data/liderboard.json');
+  errorHandler(e: Error): void {
+    console.error(e);
   }
 }

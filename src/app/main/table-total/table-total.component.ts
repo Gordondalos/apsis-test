@@ -218,7 +218,7 @@ export class TableTotalComponent implements OnInit {
     return item.level;
   }
 
-  changeCount(row: any, operation: string) {
+  changeCount(row: any, operation: string): void {
     if (operation === 'add') {
       row.count += 1;
     } else {

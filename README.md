@@ -12,3 +12,6 @@ The application is written using the following libraries:
   * ngrx - reactive data warehouse
   * ng-dynamic-component - a library for creating reactive components
   * utils-decorators - library with cool decorators function
+  * until-destroy - library for optimisation unsubscribe in components
+  * iiko-styles - library with start stiles package
+  * @ngrx/store-devtools - library for show devtools in browser
