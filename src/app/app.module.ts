@@ -18,16 +18,22 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from './base-components/header/header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { HttpClientModule } from '@angular/common/http';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     CommonModule,
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+    FormlyModule.forRoot(),
+    FormlyMaterialModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {

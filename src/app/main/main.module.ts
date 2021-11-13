@@ -5,7 +5,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { EditGroupComponent } from './edit-group/edit-group.component';
-import { EditCounterComponent } from './edit-counter/edit-counter.component';
+import { TableTotalComponent } from './table-total/table-total.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { FormlyModule } from '@ngx-formly/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatListModule } from '@angular/material/list';
 
 const routes: Routes = [
   {
@@ -20,12 +26,18 @@ const routes: Routes = [
     MainComponent,
     EditUserComponent,
     EditGroupComponent,
-    EditCounterComponent
+    TableTotalComponent
   ],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        MatButtonModule
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule,
+    MatMenuModule,
+    FormlyModule.forChild(),
+    ReactiveFormsModule,
+    MatListModule
+  ]
 })
 export class MainModule { }

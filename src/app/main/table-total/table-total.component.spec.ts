@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditCounterComponent } from './edit-counter.component';
+import { TableTotalComponent } from './table-total.component';
 
-describe('EditCounterComponent', () => {
-  let component: EditCounterComponent;
-  let fixture: ComponentFixture<EditCounterComponent>;
+describe('TableTotalComponent', () => {
+  let component: TableTotalComponent;
+  let fixture: ComponentFixture<TableTotalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditCounterComponent ]
+      declarations: [ TableTotalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditCounterComponent);
+    fixture = TestBed.createComponent(TableTotalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

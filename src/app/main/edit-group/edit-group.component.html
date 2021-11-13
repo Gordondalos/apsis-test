@@ -1,1 +1,29 @@
-<p>edit-group works!</p>
+<div class="mt16">
+
+  <h3 class="f24 bold" i18n>Create/edit team</h3>
+
+  <mat-list role="list" class="mx3 mb16">
+    <ng-container *ngFor="let team of teams">
+      <mat-list-item class="mat-elevation-z2 mb16" role="listitem">
+        <div class="d-flex w100">
+          {{team.name}}
+          <div class="f-gr-1"></div>
+          <mat-icon (click)="edit(team)"  class="f18 mr16 pointer" color="accent">edit</mat-icon>
+          <mat-icon (click)="delete(team)" class="f18 pointer" color="warn">delete</mat-icon>
+        </div>
+
+      </mat-list-item>
+    </ng-container>
+
+  </mat-list>
+
+  <form class="mx3" [formGroup]="form" (ngSubmit)="onSubmit(model)">
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+
+    <div class="d-flex">
+      <div class="f-gr-1"></div>
+      <button type="submit" mat-raised-button>Save</button>
+    </div>
+  </form>
+</div>
+
