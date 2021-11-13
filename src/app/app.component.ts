@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MainService } from './services/main.service';
 import { DynamicInterface } from './interfaces/dynamicInterface';
@@ -38,14 +38,12 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.data = value;
         this.driver?.open();
       });
-
   }
 
   ngAfterViewInit() {
     this.driver?.closedStart
       .subscribe(() => {
         this.data = undefined;
-        console.log(123)
       });
   }
 
