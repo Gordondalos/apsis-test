@@ -33,6 +33,9 @@ export class TableTotalComponent implements OnInit {
 
   @Input() set users(value: UserInterface[]) {
     this._users = value;
+    // in a real project this is a very bad decision,
+    // because this re-renders the table and recalculates all the counters,
+    // this is done to show how to work with pipes
     this.loadData(value);
   }
 

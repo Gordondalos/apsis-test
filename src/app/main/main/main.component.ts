@@ -36,6 +36,7 @@ export class MainComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((teams: TeamInterface[]) => {
         if (teams && teams.length) {
+          // in a real project this is a bad decision
           this.tableService.update(teams, 'teams').then();
           this.teams = cloneDeep(teams)
         }
@@ -45,6 +46,7 @@ export class MainComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((users: UserInterface[]) => {
         if (users && users.length) {
+          // in a real project this is a bad decision
           this.tableService.update(users, 'users').then();
           this.users = cloneDeep(users);
         }
