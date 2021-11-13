@@ -21,7 +21,7 @@
       <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
       <div class="d-flex">
         <div class="f-gr-1"></div>
-        <button type="submit" mat-raised-button>Save</button>
+        <button [disabled]="form.invalid" type="submit" mat-raised-button>Save</button>
       </div>
     </form>
   </ng-container>

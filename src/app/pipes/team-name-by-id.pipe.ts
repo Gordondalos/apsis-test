@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TeamInterface } from '../interfaces/team.interface';
+import { $localize } from '@angular/localize/init';
 
 @Pipe({
   name: 'teamNameById'
@@ -13,7 +14,7 @@ export class TeamNameByIdPipe implements PipeTransform {
     }
     const team: TeamInterface | undefined = teams.find((t) => t.id === value);
 
-    return team && team.name ? team.name : '';
+    return team && team.name ? team.name : $localize `no team`
 
   }
 

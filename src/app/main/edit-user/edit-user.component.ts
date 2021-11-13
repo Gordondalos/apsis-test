@@ -69,7 +69,8 @@ export class EditUserComponent implements OnInit {
         type: 'select',
         templateOptions: {
           label: $localize`Select teams`,
-          options: this.getOptionTeams()
+          options: this.getOptionTeams(),
+          required: true,
         },
       },
     ];

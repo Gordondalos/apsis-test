@@ -37,6 +37,7 @@ export class MainComponent implements OnInit {
       .subscribe((teams: TeamInterface[]) => {
         if (teams && teams.length) {
           this.tableService.update(teams, 'teams').then();
+          this.teams = cloneDeep(teams)
         }
       });
 
@@ -45,6 +46,7 @@ export class MainComponent implements OnInit {
       .subscribe((users: UserInterface[]) => {
         if (users && users.length) {
           this.tableService.update(users, 'users').then();
+          this.users = cloneDeep(users);
         }
       });
   }
@@ -65,7 +67,7 @@ export class MainComponent implements OnInit {
     }
   }
 
-  createUser() {
+  editUser() {
     this.dynamicService.openComponentEvent$.next({
       component: EditUserComponent,
       prop: {}

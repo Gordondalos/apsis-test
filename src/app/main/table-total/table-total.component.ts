@@ -33,6 +33,7 @@ export class TableTotalComponent implements OnInit {
 
   @Input() set users(value: UserInterface[]) {
     this._users = value;
+    this.loadData(value);
   }
 
   private _users: UserInterface[] = [];
@@ -62,9 +63,9 @@ export class TableTotalComponent implements OnInit {
     {
       field: 'count'
     },
-    {
-      field: 'id'
-    },
+    // {
+    //   field: 'id'
+    // },
 
   ];
   displayedColumns: string[];
@@ -83,14 +84,18 @@ export class TableTotalComponent implements OnInit {
     this.dataSourceService.getAllData()
       .pipe(untilDestroyed(this))
       .subscribe(
-        (user: UserInterface[]) => {
-          this._alldata = user;
-          this.dataSource.data = this.addGroups(this._alldata, this.groupByColumns);
-          this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
-          this.dataSource.filter = performance.now().toString();
+        (users: UserInterface[]) => {
+          this.loadData(users);
         },
         (err: any) => console.log(err)
       );
+  }
+
+  loadData(users: UserInterface[]) {
+    this._alldata = users;
+    this.dataSource.data = this.addGroups(this._alldata, this.groupByColumns);
+    this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
+    this.dataSource.filter = performance.now().toString();
   }
 
   groupBy(event: { stopPropagation: () => void; }, column: { field: any; }) {
@@ -225,4 +230,5 @@ export class TableTotalComponent implements OnInit {
     });
     this.store$.dispatch(new AllUsersAction(cloneDeep(this.users)));
   }
+
 }
