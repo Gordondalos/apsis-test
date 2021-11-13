@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TeamInterface } from '../../interfaces/team.interface';
-import { each, reject } from 'lodash-es';
+import { cloneDeep, each, reject } from 'lodash-es';
 import { uid } from 'uid';
+import { select, Store } from '@ngrx/store';
+import { IAppState } from '../../store/state/app.state';
+import { teamsSelector } from '../../store/selectors/teams.selector';
+
+import { AllTeamsAction } from '../../store/actions/teams.actions';
 
 class FormlyFieldConfig {
 }
@@ -31,15 +36,22 @@ export class EditGroupComponent implements OnInit {
   ];
 
 
-  constructor() {
+  constructor(
+    public store$: Store<IAppState>,
+  ) {
   }
 
   ngOnInit(): void {
+    this.store$.pipe(select(teamsSelector))
+      .subscribe((teams: any) => {
+        if (teams && teams.length) {
+          this.teams = cloneDeep(teams);
+        }
+      });
   }
 
 
   onSubmit(model: TeamInterface) {
-
     let found = false;
     each(this.teams, (team: TeamInterface, index: number) => {
       if (team.id === model.id) {
@@ -53,19 +65,21 @@ export class EditGroupComponent implements OnInit {
         id: uid(25)
       });
     }
-
     this.model = {};
+    this.updateData();
   }
 
   delete(team: TeamInterface): void {
     this.teams = reject(this.teams, (t: TeamInterface) => t.id === team.id);
+    this.updateData();
   }
 
   edit(team: TeamInterface) {
     this.model = team;
+    this.updateData();
   }
 
-  updateData(){
-
+  updateData() {
+    this.store$.dispatch(new AllTeamsAction(cloneDeep(this.teams)));
   }
 }

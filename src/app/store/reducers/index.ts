@@ -1,19 +1,18 @@
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
-import { environment } from '../../../environments/environment';
 import { currentDashBoardReducer } from './dashboard.reducers';
 import { IDashboardState } from '../state/dashboard.state';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
+import { environment } from '../../../environments/environment';
 
-const currentDashBoardNode = 'currentDashboard';
 
 export interface State {
   router?: RouterReducerState;
-  [currentDashBoardNode]: IDashboardState;
+  main: IDashboardState;
 }
 
 export const reducers: ActionReducerMap<State> = {
   router: routerReducer,
-  [currentDashBoardNode]: currentDashBoardReducer,
+  main: currentDashBoardReducer,
 };
 
 

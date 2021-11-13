@@ -1,17 +1,9 @@
-import { RolesInterface } from '../../interfaces/roles.interface';
+import { TeamInterface } from '../../interfaces/team.interface';
+import { UserInterface } from '../../interfaces/user.interface';
 
 export interface IDashboardState {
-  dashboardType?: string;
-  groupName?: string;
-  id?: number| string;
-  inactive?: boolean;
-  parentId?: number;
-  storeTemplateId?: string | number;
-  title?: string;
-  code?: any;
-  comment?: string;
-  isMain?: boolean;
-  availableRoles?: Array<RolesInterface>
+  teams?: TeamInterface[];
+  users?: UserInterface[];
 }
 
 
