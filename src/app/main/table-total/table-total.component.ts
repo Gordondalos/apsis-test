@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { CarTableDataService } from '../../services/car-table-data.service';
+import { TableService } from '../../services/table.service';
 
 export class Group {
   level = 0;
@@ -30,7 +30,7 @@ export class TableTotalComponent implements OnInit {
   groupByColumns: string[] = [];
 
   constructor(
-    protected dataSourceService: CarTableDataService,
+    protected dataSourceService: TableService,
   ) {
 
     this.columns = [{

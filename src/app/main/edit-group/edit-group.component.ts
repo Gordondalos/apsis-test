@@ -43,7 +43,7 @@ export class EditGroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.store$.pipe(select(teamsSelector))
-      .subscribe((teams: any) => {
+      .subscribe((teams) => {
         if (teams && teams.length) {
           this.teams = cloneDeep(teams);
         }

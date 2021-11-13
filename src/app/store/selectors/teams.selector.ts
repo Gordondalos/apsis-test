@@ -1,15 +1,16 @@
 import { IAppState } from '../state/app.state';
 import { createSelector } from '@ngrx/store';
 import { IDashboardState } from '../state/dashboard.state';
+import { TeamInterface } from '../../interfaces/team.interface';
 
 export const teamsSelector = (state: IAppState) => {
-  return state.main;
+  return state.main.teams;
 };
 
 export const teams = createSelector(
   teamsSelector,
-  (state: IDashboardState) => {
-    return state.teams;
+  (state) => {
+    return state;
   }
 );
 

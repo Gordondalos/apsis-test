@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MainService } from './services/main.service';
 import { DynamicInterface } from './interfaces/dynamicInterface';
@@ -11,7 +11,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('drawer', {static: false}) driver: MatDrawer | undefined;
   data?: DynamicInterface;
 
@@ -39,6 +39,14 @@ export class AppComponent implements OnInit {
         this.driver?.open();
       });
 
+  }
+
+  ngAfterViewInit() {
+    this.driver?.closedStart
+      .subscribe(() => {
+        this.data = undefined;
+        console.log(123)
+      });
   }
 
 }
