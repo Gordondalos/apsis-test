@@ -19,15 +19,6 @@ export const currentDashBoardReducer = (state = dashboardState, action: any): ID
         users: [...action.payload]
       };
     }
-
-
-    // case ECurrentDashboardActions.updateCurrentDashboardTitle:
-    //   return {
-    //     ...state,
-    //     title: action.payload
-    //   };
-    // case ECurrentDashboardActions.deleteCurrentDashboard:
-    //   return {};
     default:
       return state;
   }
