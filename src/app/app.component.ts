@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MainService } from './services/main.service';
-import { DynamicInterface } from './interfaces/dynamicInterface';
+import { DynamicInterface } from './interfaces/dynamic.Interface';
 import { DynamicService } from './services/dynamic.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -12,7 +12,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  @ViewChild('drawer', {static: false}) driver: MatDrawer | undefined;
+  @ViewChild('drawer', { static: false }) driver: MatDrawer | undefined;
   data?: DynamicInterface;
 
   constructor(
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.mainService.sidenavState
       .pipe(untilDestroyed(this))
-      .subscribe((res) => {
+      .subscribe(res => {
         if (res) {
           this.driver?.open();
         } else {

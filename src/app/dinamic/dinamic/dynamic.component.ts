@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DynamicInterface } from '../../interfaces/dynamicInterface';
+import { DynamicInterface } from '../../interfaces/dynamic.Interface';
 
 @Component({
   selector: 'app-dynamic',
   templateUrl: './dynamic.component.html',
-  styleUrls: ['./dynamic.component.scss']
+  styleUrls: ['./dynamic.component.scss'],
 })
 export class DynamicComponent implements OnInit {
   @Input() data!: DynamicInterface;
@@ -13,11 +13,7 @@ export class DynamicComponent implements OnInit {
   inputs: any;
   outputs: any;
 
-  constructor() {
-  }
-
   ngOnInit(): void {
-
     this.component = this.data.component;
 
     this.inputs = {
@@ -25,9 +21,7 @@ export class DynamicComponent implements OnInit {
     };
 
     this.outputs = {
-      changeEvent: (event: any) => {
-        console.log(event);
-      },
+      changeEvent: (event: any) => console.log(event),
     };
   }
 

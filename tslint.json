@@ -1,6 +1,24 @@
 {
-  "extends": "tslint:recommended",
+  "extends": [
+    "tslint-config-airbnb",
+    "angular-tslint-rules",
+    "tslint:recommended"
+  ],
   "rules": {
+    "no-unused-variable": true,
+    "no-trailing-whitespace": false,
+    "no-dynamic-delete": false,
+    "prefer-array-literal": false,
+    "prefer-conditional-expression": false,
+    "ter-arrow-parens": false,
+    "use-component-view-encapsulation": false,
+    "prefer-output-readonly": false,
+    "no-parameter-reassignment": false,
+    "newline-per-chained-call": false,
+    "no-non-null-assertion": true,
+    "no-redundant-jsdoc": true,
+    "no-switch-case-fall-through": true,
+    "no-var-requires": false,
     "align": {
       "options": [
         "parameters",
@@ -20,7 +38,6 @@
         "spaces"
       ]
     },
-    "no-trailing-whitespace": false,
     "deprecation": {
       "severity": "warning"
     },
@@ -75,10 +92,6 @@
       true,
       "ignore-params"
     ],
-    "no-non-null-assertion": true,
-    "no-redundant-jsdoc": true,
-    "no-switch-case-fall-through": true,
-    "no-var-requires": false,
     "object-literal-key-quotes": [
       true,
       "as-needed"
@@ -133,8 +146,8 @@
       ]
     },
     "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true
-  ,    "variable-name": {
+    "use-pipe-transform-interface": true,
+    "variable-name": {
       "options": [
         "ban-keywords",
         "check-format",
@@ -151,7 +164,7 @@
         "check-typecast"
       ]
     }
-},
+  },
   "rulesDirectory": [
     "codelyzer"
   ]

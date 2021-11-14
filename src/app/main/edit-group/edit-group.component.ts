@@ -17,7 +17,7 @@ class FormlyFieldConfig {
 @Component({
   selector: 'app-edit-group',
   templateUrl: './edit-group.component.html',
-  styleUrls: ['./edit-group.component.scss']
+  styleUrls: ['./edit-group.component.scss'],
 })
 export class EditGroupComponent implements OnInit {
 
@@ -30,11 +30,11 @@ export class EditGroupComponent implements OnInit {
       key: 'name',
       type: 'input',
       templateOptions: {
-        label: 'Team title',
-        placeholder: 'Add title team',
+        label: $localize`Team title`,
+        placeholder: $localize`Add title team`,
         required: true,
-      }
-    }
+      },
+    },
   ];
 
 
@@ -46,7 +46,7 @@ export class EditGroupComponent implements OnInit {
   ngOnInit(): void {
     this.store$.pipe(select(teamsSelector))
       .pipe(untilDestroyed(this))
-      .subscribe((teams) => {
+      .subscribe(teams => {
         if (teams && teams.length) {
           this.teams = cloneDeep(teams);
         }
@@ -65,7 +65,7 @@ export class EditGroupComponent implements OnInit {
     if (!found) {
       this.teams.push({
         ...model,
-        id: uid(25)
+        id: uid(25),
       });
     }
     this.model = {};

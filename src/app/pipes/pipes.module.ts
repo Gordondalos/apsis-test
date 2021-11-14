@@ -4,16 +4,17 @@ import { TeamNameByIdPipe } from './team-name-by-id.pipe';
 import { SumCountPipe } from './sum-count.pipe';
 
 @NgModule({
-    declarations: [
-        TeamNameByIdPipe,
-        SumCountPipe,
-    ],
+  declarations: [
+    TeamNameByIdPipe,
+    SumCountPipe,
+  ],
   exports: [
     TeamNameByIdPipe,
-    SumCountPipe
+    SumCountPipe,
   ],
-    imports: [
-        CommonModule
-    ]
+  imports: [
+    CommonModule,
+  ],
 })
-export class PipesModule { }
+export class PipesModule {
+}

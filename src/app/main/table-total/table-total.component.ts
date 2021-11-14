@@ -16,7 +16,7 @@ export class Group {
   totalCounts = 0;
 
   get visible(): boolean {
-    return !this.parent || (this.parent.visible && this.parent.expanded);
+    return !this.parent || this.parent.visible && this.parent.expanded;
   }
 }
 
@@ -24,7 +24,7 @@ export class Group {
 @Component({
   selector: 'app-table-total',
   templateUrl: './table-total.component.html',
-  styleUrls: ['./table-total.component.scss']
+  styleUrls: ['./table-total.component.scss'],
 })
 export class TableTotalComponent implements OnInit {
   get users(): UserInterface[] {
@@ -55,16 +55,16 @@ export class TableTotalComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<any | Group>([]);
 
-  _alldata!: any[];
+  _allData!: any[];
   columns: any[] = [
     {
-      field: 'team'
+      field: 'team',
     },
     {
-      field: 'name'
+      field: 'name',
     },
     {
-      field: 'count'
+      field: 'count',
     },
     // {
     //   field: 'id'
@@ -86,56 +86,24 @@ export class TableTotalComponent implements OnInit {
   ngOnInit() {
     this.dataSourceService.getAllData()
       .pipe(untilDestroyed(this))
-      .subscribe(
-        (users: UserInterface[]) => {
+      .subscribe({
+        next: (users: UserInterface[]) => {
           this.loadData(users);
         },
-        (err: any) => console.log(err)
-      );
+        error: (err: any) => console.log(err),
+      });
   }
 
   loadData(users: UserInterface[]) {
-    this._alldata = users;
-    this.dataSource.data = this.addGroups(this._alldata, this.groupByColumns);
+    this._allData = users;
+    this.dataSource.data = this.addGroups(this._allData, this.groupByColumns);
     this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
     this.dataSource.filter = performance.now().toString();
   }
 
-  groupBy(event: { stopPropagation: () => void; }, column: { field: any; }) {
-    event.stopPropagation();
-    this.checkGroupByColumn(column.field, true);
-    this.dataSource.data = this.addGroups(this._alldata, this.groupByColumns);
-    this.dataSource.filter = performance.now().toString();
-  }
 
-  checkGroupByColumn(field: string, add: boolean) {
-    let found = null;
-    for (const column of this.groupByColumns) {
-      if (column === field) {
-        found = this.groupByColumns.indexOf(column, 0);
-      }
-    }
-    if (found != null && found >= 0) {
-      if (!add) {
-        this.groupByColumns.splice(found, 1);
-      }
-    } else {
-      if (add) {
-        this.groupByColumns.push(field);
-      }
-    }
-  }
-
-  unGroupBy(event: { stopPropagation: () => void; }, column: { field: string; }) {
-    event.stopPropagation();
-    this.checkGroupByColumn(column.field, false);
-    this.dataSource.data = this.addGroups(this._alldata, this.groupByColumns);
-    this.dataSource.filter = performance.now().toString();
-  }
-
-
-  customFilterPredicate(data: any | Group, filter: string): boolean {
-    return (data instanceof Group) ? data.visible : this.getDataRowVisible(data);
+  customFilterPredicate(data: any | Group): boolean {
+    return data instanceof Group ? data.visible : this.getDataRowVisible(data);
   }
 
   getDataRowVisible(data: any): boolean {
@@ -152,7 +120,7 @@ export class TableTotalComponent implements OnInit {
           }
         });
         return match;
-      }
+      },
     );
 
     if (groupRows.length === 0) {
@@ -188,7 +156,7 @@ export class TableTotalComponent implements OnInit {
             result[groupByColumns[i]] = row[groupByColumns[i]];
           }
           return result;
-        }
+        },
       ),
       JSON.stringify);
 
@@ -207,7 +175,7 @@ export class TableTotalComponent implements OnInit {
 
   uniqueBy(a: any[], key: { (value: any, replacer?: ((this: any, key: string, value: any) => any) | undefined, space?: string | number | undefined): string; (value: any, replacer?: (string | number)[] | null | undefined, space?: string | number | undefined): string; (arg0: any): any; }) {
     const seen = {};
-    return a.filter((item) => {
+    return a.filter(item => {
       const k = key(item);
       // @ts-ignore
       return seen.hasOwnProperty(k) ? false : (seen[k] = true);

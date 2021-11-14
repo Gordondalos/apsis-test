@@ -6,14 +6,15 @@ import { DynamicModule } from 'ng-dynamic-component';
 
 @NgModule({
   declarations: [
-    DynamicComponent
+    DynamicComponent,
   ],
   exports: [
-    DynamicComponent
+    DynamicComponent,
   ],
   imports: [
     CommonModule,
-    DynamicModule
-  ]
+    DynamicModule,
+  ],
 })
-export class MyDynamicModule { }
+export class MyDynamicModule {
+}

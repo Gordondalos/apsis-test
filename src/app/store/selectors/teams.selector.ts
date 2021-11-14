@@ -7,7 +7,7 @@ export const teamsSelector = (state: IAppState) => {
 
 export const teams = createSelector(
   teamsSelector,
-  (state) => {
+  state => {
     return state;
   }
 );

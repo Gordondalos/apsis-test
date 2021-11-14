@@ -7,7 +7,7 @@ export const usersSelector = (state: IAppState) => {
 
 export const users = createSelector(
   usersSelector,
-  (state) => {
+  state => {
     return state;
   }
 );

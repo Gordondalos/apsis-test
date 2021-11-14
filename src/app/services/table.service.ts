@@ -26,7 +26,7 @@ export class TableService {
   })
   getData(type: string): Promise<UserInterface[] | TeamInterface[]> {
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const data = localStorage.getItem(type);
       if (data) {
         resolve(JSON.parse(data));
@@ -47,7 +47,7 @@ export class TableService {
     },
   })
   update(users: UserInterface[] | TeamInterface[], type: string): Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       localStorage.setItem(type, JSON.stringify(users));
       resolve(true);
     });
@@ -61,7 +61,7 @@ export class TableService {
   * */
   getAllData(): Observable<UserInterface[]> {
     const type = 'users';
-    const prom: Promise<UserInterface[]> = new Promise((resolve) => {
+    const prom: Promise<UserInterface[]> = new Promise(resolve => {
       const data = localStorage.getItem(type);
       if (data) {
         resolve(JSON.parse(data));

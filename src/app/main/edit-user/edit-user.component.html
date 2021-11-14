@@ -1,27 +1,27 @@
-<div class="mt16">
+<div class='mt16'>
 
-  <h3 class="f24 bold" i18n>Create/edit user</h3>
+  <h3 class='f24 bold' i18n>Create/edit user</h3>
 
-  <mat-list role="list" class="mx3 mb16">
-    <ng-container *ngFor="let user of users">
-      <mat-list-item class="mat-elevation-z2 mb16" role="listitem">
-        <div class="d-flex w100">
+  <mat-list role='list' class='mx3 mb16'>
+    <ng-container *ngFor='let user of users'>
+      <mat-list-item class='mat-elevation-z2 mb16' role='listitem'>
+        <div class='d-flex w100'>
           {{user.name}} | {{user.team | teamNameById: teams}}
-          <div class="f-gr-1"></div>
-          <mat-icon (click)="edit(user)" class="f18 mr16 pointer" color="accent">edit</mat-icon>
-          <mat-icon (click)="delete(user)" class="f18 pointer" color="warn">delete</mat-icon>
+          <div class='f-gr-1'></div>
+          <mat-icon (click)='edit(user)' class='f18 mr16 pointer' color='accent'>edit</mat-icon>
+          <mat-icon (click)='delete(user)' class='f18 pointer' color='warn'>delete</mat-icon>
         </div>
 
       </mat-list-item>
     </ng-container>
 
   </mat-list>
-  <ng-container *ngIf="fields">
-    <form class="mx3" [formGroup]="form" (ngSubmit)="onSubmit(model)">
-      <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
-      <div class="d-flex">
-        <div class="f-gr-1"></div>
-        <button [disabled]="form.invalid" type="submit" mat-raised-button>Save</button>
+  <ng-container *ngIf='fields'>
+    <form class='mx3' [formGroup]='form' (ngSubmit)='onSubmit(model)'>
+      <formly-form [form]='form' [fields]='fields' [model]='model'></formly-form>
+      <div class='d-flex'>
+        <div class='f-gr-1'></div>
+        <button [disabled]='form.invalid' type='submit' mat-raised-button>Save</button>
       </div>
     </form>
   </ng-container>

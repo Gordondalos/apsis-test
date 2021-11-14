@@ -19,7 +19,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
 
@@ -38,7 +38,7 @@ export class MainComponent implements OnInit {
         if (teams && teams.length) {
           // in a real project this is a bad decision
           this.tableService.update(teams, 'teams').then();
-          this.teams = cloneDeep(teams)
+          this.teams = cloneDeep(teams);
         }
       });
 
@@ -72,14 +72,14 @@ export class MainComponent implements OnInit {
   editUser() {
     this.dynamicService.openComponentEvent$.next({
       component: EditUserComponent,
-      prop: {}
+      prop: {},
     });
   }
 
   editTeam() {
     this.dynamicService.openComponentEvent$.next({
       component: EditGroupComponent,
-      prop: {}
+      prop: {},
     });
   }
 

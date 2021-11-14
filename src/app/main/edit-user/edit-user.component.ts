@@ -86,6 +86,7 @@ export class EditUserComponent implements OnInit {
         });
       }
     });
+
     return options;
   }
 
@@ -94,7 +95,7 @@ export class EditUserComponent implements OnInit {
   }
 
   delete(user: UserInterface) {
-    this.users = reject(this.users, (u) => u.id === user.id);
+    this.users = reject(this.users, u => u.id === user.id);
     this.updateData();
   }
 

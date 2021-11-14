@@ -41,7 +41,7 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
         strictActionImmutability: true
       }
     }),
-    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([AppEffects]),
     StoreRouterConnectingModule.forRoot(),
     BrowserAnimationsModule,

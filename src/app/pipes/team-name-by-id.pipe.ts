@@ -12,7 +12,7 @@ export class TeamNameByIdPipe implements PipeTransform {
     if (!value || !teams) {
       return '';
     }
-    const team: TeamInterface | undefined = teams.find((t) => t.id === value);
+    const team: TeamInterface | undefined = teams.find(t => t.id === value);
 
     return team && team.name ? team.name : $localize `no team`
 

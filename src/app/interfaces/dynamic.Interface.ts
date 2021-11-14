@@ -1,4 +1,4 @@
 export interface DynamicInterface {
-  component: any,
-  prop: any
+  component: any;
+  prop: any;
 }

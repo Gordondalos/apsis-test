@@ -10,5 +10,5 @@ export interface IDashboardState {
 export const dashboardState: IDashboardState = {
   teams: [],
   users: []
-}
+};
 

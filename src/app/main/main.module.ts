@@ -17,7 +17,7 @@ import { PipesModule } from '../pipes/pipes.module';
 const routes: Routes = [
   {
     path: '',
-    component: MainComponent
+    component: MainComponent,
   },
 
 ];
@@ -27,19 +27,20 @@ const routes: Routes = [
     MainComponent,
     EditUserComponent,
     EditGroupComponent,
-    TableTotalComponent
+    TableTotalComponent,
   ],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        MatButtonModule,
-        MatTableModule,
-        MatIconModule,
-        MatMenuModule,
-        FormlyModule.forChild(),
-        ReactiveFormsModule,
-        MatListModule,
-        PipesModule
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule,
+    MatMenuModule,
+    FormlyModule.forChild(),
+    ReactiveFormsModule,
+    MatListModule,
+    PipesModule,
+  ],
 })
-export class MainModule { }
+export class MainModule {
+}
