@@ -84,4 +84,8 @@ export class EditGroupComponent implements OnInit {
   updateData() {
     this.store$.dispatch(new AllTeamsAction(cloneDeep(this.teams)));
   }
+
+  trackFunc(index: number, team: TeamInterface) {
+    return team.id;
+  };
 }

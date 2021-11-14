@@ -201,5 +201,4 @@ export class TableTotalComponent implements OnInit {
     });
     this.store$.dispatch(new AllUsersAction(cloneDeep(this.users)));
   }
-
 }

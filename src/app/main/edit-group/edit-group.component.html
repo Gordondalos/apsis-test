@@ -3,7 +3,7 @@
   <h3 class='f24 bold' i18n>Create/edit team</h3>
 
   <mat-list role='list' class='mx3 mb16'>
-    <ng-container *ngFor='let team of teams'>
+    <ng-container *ngFor='let team of teams; trackBy:trackFunc'>
       <mat-list-item class='mat-elevation-z2 mb16' role='listitem'>
         <div class='d-flex w100'>
           {{team.name}}

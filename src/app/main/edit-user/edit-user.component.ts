@@ -122,4 +122,8 @@ export class EditUserComponent implements OnInit {
   updateData() {
     this.store$.dispatch(new AllUsersAction(cloneDeep(this.users)));
   }
+
+  trackFunc(index: number, user: UserInterface) {
+    return user.id;
+  };
 }
