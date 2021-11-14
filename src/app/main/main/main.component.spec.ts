@@ -29,4 +29,37 @@ describe('MainComponent', () => {
     expect(component.teams).toBeTruthy();
     expect(component.users).toBeTruthy();
   });
+
+  it('should load data', () => {
+    component.loadData();
+    expect(component.teams).toBeTruthy();
+    expect(component.users).toBeTruthy();
+  });
+
+  it('should store change', () => {
+    const teams = [{name: 'vasa'}];
+    window.localStorage.setItem('teams', JSON.stringify(teams));
+    component.teams = teams;
+    component.store$.subscribe(res => {
+      expect(res).toBeTruthy();
+    });
+    component.loadData();
+  });
+
+  it('should store change user', () => {
+    component.editUser();
+    component.dynamicService.openComponentEvent$
+      .subscribe((res: any) => {
+        expect(res).toBeTruthy();
+      })
+  });
+
+  it('should store change team', () => {
+    component.editTeam();
+    component.dynamicService.openComponentEvent$
+      .subscribe((res: any) => {
+        expect(res).toBeTruthy();
+      })
+  });
+
 });

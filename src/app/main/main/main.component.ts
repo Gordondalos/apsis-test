@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
 
   constructor(
     private mainService: MainService,
-    private dynamicService: DynamicService,
+    public dynamicService: DynamicService,
     private tableService: TableService,
     public store$: Store<IAppState>,
   ) {

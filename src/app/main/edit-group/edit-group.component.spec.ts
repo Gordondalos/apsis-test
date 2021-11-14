@@ -25,6 +25,15 @@ describe('EditGroupComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should init', () => {
+    component.teams = [
+      { name: 'one', id: '1' },
+      { name: 'two', id: '2' },
+    ];
+    component.ngOnInit();
+    expect(component).toBeTruthy();
+  });
+
   it('should delete teams correctly', () => {
     component.teams = [
       { name: 'one', id: '1' },
@@ -35,7 +44,7 @@ describe('EditGroupComponent', () => {
   });
 
   it('should insert model', () => {
-    const team =  { name: 'one', id: '1' };
+    const team = { name: 'one', id: '1' };
     component.edit(team);
     expect(component.model).toEqual(team);
   });
@@ -45,7 +54,7 @@ describe('EditGroupComponent', () => {
       { name: 'one', id: '1' },
       { name: 'two', id: '2' },
     ];
-    const model =  { name: 'one', id: '1' };
+    const model = { name: 'one', id: '1' };
     component.onSubmit(model);
 
     expect(component.model).toEqual({});
@@ -56,7 +65,7 @@ describe('EditGroupComponent', () => {
       { name: 'one', id: '1' },
       { name: 'two', id: '2' },
     ];
-    const model =  { name: 'one', id: '3' };
+    const model = { name: 'one', id: '3' };
     component.onSubmit(model);
 
     expect(component.teams.length).toBe(3);
@@ -67,9 +76,33 @@ describe('EditGroupComponent', () => {
       { name: 'one', id: '1' },
       { name: 'two', id: '2' },
     ];
-    const model =  { name: 'www', id: '1' };
+    const model = { name: 'www', id: '1' };
     component.onSubmit(model);
 
-    expect(component.teams[0]).toEqual( { name: 'www', id: '1' });
+    expect(component.teams[0]).toEqual({ name: 'www', id: '1' });
   });
+
+
+  it('should update store state', () => {
+    component.teams = [
+      { name: 'one', id: '1' },
+      { name: 'two', id: '2' },
+    ];
+    component.updateData();
+    component.store$
+      .subscribe(res => {
+        expect(res).toBeTruthy();
+      });
+  });
+
+  it('should return index of team', () => {
+    component.teams = [
+      { name: 'one', id: '1' },
+      { name: 'two', id: '2' },
+    ];
+    const res = component.trackFunc(1, {id: '1'});
+    expect(res).toBe('1');
+  });
+
+
 });

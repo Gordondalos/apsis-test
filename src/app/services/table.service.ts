@@ -46,9 +46,9 @@ export class TableService {
       console.log('logger update data');
     },
   })
-  update(users: UserInterface[] | TeamInterface[], type: string): Promise<any> {
+  update(data: UserInterface[] | TeamInterface[], type: string): Promise<any> {
     return new Promise(resolve => {
-      localStorage.setItem(type, JSON.stringify(users));
+      localStorage.setItem(type, JSON.stringify(data));
       resolve(true);
     });
   }
@@ -71,7 +71,8 @@ export class TableService {
     return from(prom);
   }
 
-  errorHandler(e: Error): void {
+  errorHandler(e: Error): boolean {
     console.error(e);
+    return false
   }
 }
