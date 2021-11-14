@@ -13,4 +13,9 @@ describe('MainService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should return state of sidebar', () => {
+    const state = service.sidenavState.value;
+    expect(state).toBeFalse();
+  });
 });

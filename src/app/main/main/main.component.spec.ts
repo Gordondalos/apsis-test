@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideMockStore } from '@ngrx/store/testing';
 import { MainComponent } from './main.component';
 
 describe('MainComponent', () => {
@@ -8,7 +8,8 @@ describe('MainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainComponent]
+      declarations: [MainComponent],
+      providers: [provideMockStore({})],
     })
     .compileComponents();
   });
@@ -21,5 +22,11 @@ describe('MainComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load teams and users after init', () => {
+    component.ngOnInit();
+    expect(component.teams).toBeTruthy();
+    expect(component.users).toBeTruthy();
   });
 });

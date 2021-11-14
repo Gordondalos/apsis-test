@@ -11,7 +11,7 @@ import { after } from 'utils-decorators';
 })
 export class TableService {
   constructor(
-    private http: HttpClient,
+    // private http: HttpClient,
   ) {
   }
 

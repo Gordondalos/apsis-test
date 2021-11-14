@@ -69,14 +69,14 @@ export class MainComponent implements OnInit {
     }
   }
 
-  editUser() {
+  editUser(): void {
     this.dynamicService.openComponentEvent$.next({
       component: EditUserComponent,
       prop: {},
     });
   }
 
-  editTeam() {
+  editTeam(): void {
     this.dynamicService.openComponentEvent$.next({
       component: EditGroupComponent,
       prop: {},
