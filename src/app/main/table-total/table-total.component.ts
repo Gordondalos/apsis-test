@@ -132,7 +132,7 @@ export class TableTotalComponent implements OnInit {
 
   groupHeaderClick(row: { expanded: boolean; }) {
     row.expanded = !row.expanded;
-    this.dataSource.filter = performance.now().toString();  // bug here need to fix
+    this.dataSource.filter = performance.now().toString();
   }
 
   addGroups(data: any[], groupByColumns: string[]): any[] {
