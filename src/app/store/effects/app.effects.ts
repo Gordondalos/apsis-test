@@ -27,6 +27,6 @@ export class AppEffects {
           }),
           catchError(() => EMPTY)
         ))
-    )}, {dispatch: false}) // effect stop dispatch
+    )}, {dispatch: false}) // the effect is turned off because it loops and the update logic needs to be corrected
     // )})
 }
