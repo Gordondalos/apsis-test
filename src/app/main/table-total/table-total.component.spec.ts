@@ -1,44 +1,91 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { TableTotalComponent } from './table-total.component';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Store, StoreModule } from '@ngrx/store';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { IAppState } from '../../store/state/app.state';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('TableTotalComponent', () => {
   let component: TableTotalComponent;
   let fixture: ComponentFixture<TableTotalComponent>;
-  let store: Store<IAppState>;
-  const initialState = {
-    main: {
-      teams: [],
-      users: [],
-    },
-  };
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [TableTotalComponent],
+      providers: [provideMockStore({})],
+    })
+      .compileComponents();
+  }));
 
   beforeEach(() => {
-
     fixture = TestBed.createComponent(TableTotalComponent);
-
-    TestBed.configureTestingModule({
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [StoreModule.forRoot({})],
-      declarations: [TableTotalComponent],
-      providers: [provideMockStore({initialState})],
-    }).compileComponents();
-
     component = fixture.componentInstance;
-    // store = TestBed.inject(MockStore);
-    // component.store$ = store;
-
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('should create', () => {
-    expect(component.columns).toBeTruthy();
+  it('should init', () => {
+    const users = [
+      { id: '1', name: 'Bob', team: '1', count: 2 },
+    ];
+    localStorage.setItem('users', JSON.stringify(users));
+    component.ngOnInit();
+    expect(component).toBeTruthy();
   });
+
+  it('should load data', () => {
+    const users = [
+      { id: '1', name: 'Bob', team: '1', count: 2 },
+    ];
+    localStorage.setItem('users', JSON.stringify(users));
+    component.loadData(users);
+    expect(component._allData).toEqual(users);
+  });
+
+  it('should test customFilterPredicate', () => {
+    const data = {
+      level: 0,
+      parent: undefined,
+      expanded: true,
+      totalCounts: 0,
+    };
+    const res = component.customFilterPredicate(data);
+    expect(res).toBeTruthy();
+  });
+
+  it('should show group visible', () => {
+    const data = {
+      level: 0,
+      parent: undefined,
+      expanded: true,
+      totalCounts: 0,
+    };
+    const res = component.getDataRowVisible(data);
+    expect(res).toBeTruthy();
+  });
+
+  it('should expand header', () => {
+    const data = {
+      level: 0,
+      parent: undefined,
+      expanded: true,
+      totalCounts: 0,
+    };
+    const exp = { expanded: true };
+    component.groupHeaderClick(exp);
+    expect(exp.expanded).toBeFalse();
+  });
+
+  it('should add group', () => {
+    const data = {
+      level: 0,
+      parent: undefined,
+      expanded: true,
+      totalCounts: 0,
+    };
+    const res =  component.addGroups([data], []);
+    expect(res).toBeTruthy();
+  });
+
 });
