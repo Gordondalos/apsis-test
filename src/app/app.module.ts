@@ -4,9 +4,7 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
-import { metaReducers, reducers } from './store/reducers';
 import { environment } from '../environments/environment';
-import { AppEffects } from './store/effects/app.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -21,6 +19,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
+import { reducers } from './users/store/users.reducers';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [
@@ -34,23 +34,18 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
     HttpClientModule,
     FormlyModule.forRoot(),
     FormlyMaterialModule,
-    StoreModule.forRoot(reducers, {
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true
-      }
-    }),
+    StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([AppEffects]),
     StoreRouterConnectingModule.forRoot(),
+    EffectsModule.forRoot([]),
     BrowserAnimationsModule,
     MatButtonModule,
     MatSidenavModule,
     MyDynamicModule,
     DynamicModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    UsersModule
   ],
   providers: [],
   bootstrap: [AppComponent]

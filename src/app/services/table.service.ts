@@ -4,14 +4,18 @@ import { from, Observable } from 'rxjs';
 import { TeamInterface } from '../interfaces/team.interface';
 import { UserInterface } from '../interfaces/user.interface';
 import { after } from 'utils-decorators';
+import { Store } from '@ngrx/store';
+import { PersistentService } from './persistent.service';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TableService {
   constructor(
-    // private http: HttpClient,
+    private http: HttpClient,
+    private store: Store,
+    private persistService: PersistentService,
   ) {
   }
 
@@ -54,25 +58,36 @@ export class TableService {
   }
 
 
+  getTeams(): Observable<TeamInterface[]> {
+    const promise = new Promise(resolve => {
+      const res = this.persistService.get('teams');
+      if (res) {
+        resolve(res);
+      }
+      resolve([]);
+    });
+    return from(promise) as Observable<TeamInterface[]>;
+  }
+
+
   /*
   This function should return data from the backend
   * return this.http.get(myUrl);
    *showing work with localstorage
   * */
-  getAllData(): Observable<UserInterface[]> {
-    const type = 'users';
-    const prom: Promise<UserInterface[]> = new Promise(resolve => {
-      const data = localStorage.getItem(type);
-      if (data) {
-        resolve(JSON.parse(data));
+  getUsers(): Observable<UserInterface[]> {
+    const promise = new Promise(resolve => {
+      const res = this.persistService.get('users');
+      if (res) {
+        resolve(res);
       }
       resolve([]);
     });
-    return from(prom);
+    return from(promise) as Observable<UserInterface[]>;
   }
 
   errorHandler(e: Error): boolean {
     console.error(e);
-    return false
+    return false;
   }
 }

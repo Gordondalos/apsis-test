@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MainComponent } from './main/main.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { EditUserComponent } from './edit-user/edit-user.component';
-import { EditGroupComponent } from './edit-group/edit-group.component';
 import { TableTotalComponent } from './table-total/table-total.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +11,8 @@ import { FormlyModule } from '@ngx-formly/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { PipesModule } from '../pipes/pipes.module';
+import { TeamsModule } from '../teams/teams.module';
+import { UsersModule } from '../users/users.module';
 
 const routes: Routes = [
   {
@@ -25,8 +25,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     MainComponent,
-    EditUserComponent,
-    EditGroupComponent,
     TableTotalComponent,
   ],
   imports: [
@@ -40,6 +38,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatListModule,
     PipesModule,
+    TeamsModule,
+    UsersModule
   ],
 })
 export class MainModule {

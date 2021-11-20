@@ -30,7 +30,7 @@ describe('TableService', () => {
 
   it('should get data or []', async () => {
     localStorage.setItem('users', JSON.stringify([]));
-    const res = await service.getAllData().toPromise();
+    const res = await service.getUsers().toPromise();
     expect(res?.length).toBe(0)
 
   });

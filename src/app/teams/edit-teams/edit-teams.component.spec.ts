@@ -1,24 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditGroupComponent } from './edit-group.component';
+import { EditTeamsComponent } from './edit-teams.component';
 import { provideMockStore } from '@ngrx/store/testing';
-import { AllTeamsAction } from '../../store/actions/teams.actions';
+import { AllTeamsAction } from '../store/actions/teams.actions';
 import { cloneDeep } from 'lodash-es';
 
 describe('EditGroupComponent', () => {
-  let component: EditGroupComponent;
-  let fixture: ComponentFixture<EditGroupComponent>;
+  let component: EditTeamsComponent;
+  let fixture: ComponentFixture<EditTeamsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditGroupComponent],
+      declarations: [EditTeamsComponent],
       providers: [provideMockStore({})],
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditGroupComponent);
+    fixture = TestBed.createComponent(EditTeamsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

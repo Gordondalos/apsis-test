@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { teamsSelector } from '../../store/selectors/teams.selector';
 import { cloneDeep, each, reject } from 'lodash-es';
-import { IAppState } from '../../store/state/app.state';
 import { TeamInterface } from '../../interfaces/team.interface';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { UserInterface } from '../../interfaces/user.interface';
 import { uid } from 'uid';
-import { AllUsersAction } from '../../store/actions/users.actions';
-import { usersSelector } from '../../store/selectors/users.selectors';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { teamsSelector } from '../../teams/store/teams.selectors';
+import { usersSelector } from '../store/users.selectors';
+import { updateAllUsersSuccessAction } from '../store/users.actions';
 
 @UntilDestroy()
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.scss']
+  styleUrls: ['./edit-user.component.scss'],
 })
 export class EditUserComponent implements OnInit {
 
@@ -28,29 +27,25 @@ export class EditUserComponent implements OnInit {
   fields: FormlyFieldConfig[] = [];
 
   constructor(
-    public store$: Store<IAppState>,
+    public store: Store,
   ) {
   }
 
   ngOnInit(): void {
-    this.store$.pipe(select(teamsSelector))
+    //@ts-ignore
+    this.store.pipe(select(teamsSelector))
       .pipe(untilDestroyed(this))
-      .subscribe((teams: TeamInterface[]) => {
-        if (teams && teams.length) {
-          this.teams = cloneDeep(teams);
-          this.drawForm();
-        }
+      .subscribe(teams => {
+        this.teams = cloneDeep(teams);
+        this.drawForm();
       });
 
-    this.store$.pipe(select(usersSelector))
+//@ts-ignore
+    this.store.pipe(select(usersSelector))
       .pipe(untilDestroyed(this))
-      .subscribe((users: UserInterface[]) => {
-        if (users && users.length) {
-          this.users = cloneDeep(users);
-        }
+      .subscribe(users => {
+        this.users = cloneDeep(users);
       });
-
-    this.drawForm();
   }
 
   drawForm() {
@@ -62,7 +57,7 @@ export class EditUserComponent implements OnInit {
           label: $localize`User name`,
           placeholder: $localize`Add user name`,
           required: true,
-        }
+        },
       },
       {
         key: 'team',
@@ -82,7 +77,7 @@ export class EditUserComponent implements OnInit {
       if (team.name && team.id) {
         options.push({
           label: team.name,
-          value: team.id
+          value: team.id,
         });
       }
     });
@@ -111,7 +106,7 @@ export class EditUserComponent implements OnInit {
       this.users.push({
         ...model,
         count: 0,
-        id: uid(25)
+        id: uid(25),
       });
     }
 
@@ -120,7 +115,7 @@ export class EditUserComponent implements OnInit {
   }
 
   updateData() {
-    this.store$.dispatch(new AllUsersAction(cloneDeep(this.users)));
+    this.store.dispatch(updateAllUsersSuccessAction({ payload: cloneDeep(this.users) }));
   }
 
   trackFunc(index: number, user: UserInterface) {

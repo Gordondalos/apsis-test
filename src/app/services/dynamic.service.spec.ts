@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { DynamicService } from './dynamic.service';
-import { EditUserComponent } from '../main/edit-user/edit-user.component';
+import { EditUserComponent } from '../users/edit-user/edit-user.component';
 import { DynamicInterface } from '../interfaces/dynamic.Interface';
 
 describe('DynamicService', () => {

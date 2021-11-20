@@ -9,7 +9,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('drawer', { static: false }) driver: MatDrawer | undefined;
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   constructor(
     private mainService: MainService,
-    private dynamicService: DynamicService
+    private dynamicService: DynamicService,
   ) {
   }
 

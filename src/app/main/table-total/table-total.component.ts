@@ -1,13 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { TableService } from '../../services/table.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { UserInterface } from '../../interfaces/user.interface';
 import { TeamInterface } from '../../interfaces/team.interface';
 import { cloneDeep, each } from 'lodash-es';
-import { AllUsersAction } from '../../store/actions/users.actions';
-import { Store } from '@ngrx/store';
-import { IAppState } from '../../store/state/app.state';
+import { select, Store } from '@ngrx/store';
+import { usersSelector } from '../../users/store/users.selectors';
+import {  updateAllUsersSuccessAction } from '../../users/store/users.actions';
+import { teamsSelector } from '../../teams/store/teams.selectors';
+import { updateAllTeamsSuccessAction } from '../../teams/store/teams.actions';
+
 
 export class Group {
   level = 0;
@@ -31,12 +33,8 @@ export class TableTotalComponent implements OnInit {
     return this._users;
   }
 
-  @Input() set users(value: UserInterface[]) {
+  set users(value: UserInterface[]) {
     this._users = value;
-    // in a real project this is a very bad decision,
-    // because this re-renders the table and recalculates all the counters,
-    // this is done to show how to work with pipes
-    this.loadData(value);
   }
 
   private _users: UserInterface[] = [];
@@ -45,7 +43,7 @@ export class TableTotalComponent implements OnInit {
     return this._teams;
   }
 
-  @Input() set teams(value: TeamInterface[]) {
+  set teams(value: TeamInterface[]) {
     this._teams = value;
   }
 
@@ -75,8 +73,7 @@ export class TableTotalComponent implements OnInit {
   groupByColumns: string[] = [];
 
   constructor(
-    protected dataSourceService: TableService,
-    public store$: Store<IAppState>,
+    public store: Store,
   ) {
 
     this.displayedColumns = this.columns.map(column => column.field);
@@ -84,13 +81,23 @@ export class TableTotalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSourceService.getAllData()
+    this.init();
+  }
+
+  async init() {
+    //@ts-ignore
+    this.store.pipe(select(usersSelector))
       .pipe(untilDestroyed(this))
-      .subscribe({
-        next: (users: UserInterface[]) => {
-          this.loadData(users);
-        },
-        error: (err: any) => console.log(err),
+      .subscribe((users: UserInterface[]) => {
+        this.users = cloneDeep(users);
+        this.loadData(this.users);
+      });
+
+    //@ts-ignore
+    this.store.pipe(select(teamsSelector))
+      .pipe(untilDestroyed(this))
+      .subscribe((teams: TeamInterface[]) => {
+        this.teams = cloneDeep(teams);
       });
   }
 
@@ -197,8 +204,25 @@ export class TableTotalComponent implements OnInit {
     each(this.users, (user, index) => {
       if (user.id === row.id) {
         this.users[index] = row;
+        for (let team of this.teams) {
+          if (team.id === row.team) {
+            if (!team.count) {
+              team.count = 0;
+            }
+            if (operation === 'add') {
+              team.count += 1;
+            } else {
+              team.count -= 1;
+            }
+          }
+        }
       }
     });
-    this.store$.dispatch(new AllUsersAction(cloneDeep(this.users)));
+    this.updateData();
+  }
+
+  updateData() {
+    this.store.dispatch(updateAllUsersSuccessAction({ payload: cloneDeep(this.users) }));
+    this.store.dispatch(updateAllTeamsSuccessAction({payload: this.teams}));
   }
 }
