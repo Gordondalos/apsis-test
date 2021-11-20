@@ -1,9 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { EditTeamsComponent } from './edit-teams.component';
 import { provideMockStore } from '@ngrx/store/testing';
-import { AllTeamsAction } from '../store/actions/teams.actions';
-import { cloneDeep } from 'lodash-es';
 
 describe('EditGroupComponent', () => {
   let component: EditTeamsComponent;
@@ -91,7 +88,7 @@ describe('EditGroupComponent', () => {
       { name: 'two', id: '2' },
     ];
     component.updateData();
-    component.store$
+    component.store
       .subscribe(res => {
         expect(res).toBeTruthy();
       });

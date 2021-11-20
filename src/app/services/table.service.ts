@@ -13,7 +13,7 @@ import { PersistentService } from './persistent.service';
 })
 export class TableService {
   constructor(
-    private http: HttpClient,
+    // private http: HttpClient,
     private store: Store,
     private persistService: PersistentService,
   ) {
