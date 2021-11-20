@@ -11,23 +11,6 @@ import { PersistentService } from '../../services/persistent.service';
 @Injectable()
 export class TeamsEffects {
 
-  updateAllTeams = createEffect(() =>
-    this.actions$.pipe(
-      ofType(updateAllTeamsAction),
-      switchMap(() => {
-        return this.tableService.getTeams()
-          .pipe(
-            map((teams: TeamInterface[]) => {
-              return updateAllTeamsSuccessAction({ payload: teams });
-            }),
-            catchError((errorResponse: HttpErrorResponse) => {
-              return of(updateAllTeamsFailureAction({ errors: errorResponse }));
-            }),
-          );
-      }),
-    ), { dispatch: false },
-  );
-
   updateLocalStorage$ = createEffect(
     () =>
       this.actions$.pipe(
